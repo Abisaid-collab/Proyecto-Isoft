@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image 
 ##hola
+##este es el ejemplo 2
 ventana = tk.Tk()
 id = StringVar()
 correo= StringVar()
