@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from PIL import Image 
-##hola
+##from PIL import ImageTk
 ##este es el ejemplo 2
+print("Hola chaval")
 ventana = tk.Tk()
 id = StringVar()
 correo= StringVar()
