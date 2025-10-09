@@ -2,13 +2,18 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from PIL import Image 
-##hola
+##from PIL import ImageTk
 ##este es el ejemplo 2
+print("Hola chaval")
+print("eyeyeyeyeyey")
+print("jejejejje")
 ventana = tk.Tk()
+print("Al abisaid le gusta la lizania")
 id = StringVar()
 correo= StringVar()
 nombre_p=StringVar()
 desc=StringVar()   
+print("blalalassada")
 matricula = StringVar()
 nombre = StringVar()
 codigo= StringVar()
