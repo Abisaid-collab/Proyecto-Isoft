@@ -6,6 +6,7 @@ from PIL import Image
 ##este es el ejemplo 2
 print("Hola chaval")
 print("eyeyeyeyeyey")
+print("jejejejje")
 ventana = tk.Tk()
 id = StringVar()
 correo= StringVar()
