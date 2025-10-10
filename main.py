@@ -6,13 +6,12 @@ from PIL import Image, ImageTk
 ventana = Tk()
 ventana.title("Zapaisoft")
 ventana.iconbitmap("iconon.ico")
-
+ventana.geometry("500x450")
 #Creacion de frame 
-frame1 = Frame(ventana, width=900, height=600)
+frame1 = Frame(ventana, bg="blue")
 frame1.pack ()
 
-#Agregacion y posicionamiento de logo
-Logo = Image.open("Logo.png")
+Logo = Image.open("iconon.ico")
 ImagenRedimensionada = Logo.resize((100, 50))
 imagen_tk = ImageTk.PhotoImage(ImagenRedimensionada)
 label_imagen = Label(frame1, image=imagen_tk)
