@@ -1,45 +1,163 @@
 #Importacion de librerias
 from tkinter import *
+from tkinter import messagebox
 from PIL import Image, ImageTk
 
+colorfondo = "#26C6DA"
+fondo = "#14213D"
 #Creacion de ventana
-ventana = Tk()
-ventana.title("Zapaisoft")
-ventana.iconbitmap("iconon.ico")
-ventana.geometry("500x450")
-#Creacion de frame 
-frame1 = Frame(ventana, bg="blue")
-frame1.pack ()
+class Login():
+    def __init__(self):
+        self.ventana = Tk()
+        self.ventana.title("Zapaisoft")
+        self.ventana.iconbitmap("iconon.ico")
+        self.ventana.resizable(0,0)
+        self.ventana.geometry("350x400+450+100")
 
-Logo = Image.open("iconon.ico")
-ImagenRedimensionada = Logo.resize((100, 50))
-imagen_tk = ImageTk.PhotoImage(ImagenRedimensionada)
-label_imagen = Label(frame1, image=imagen_tk)
-label_imagen.grid(row=1, column=1, padx=10, pady=10, sticky=W)
+        #Creacion de frames
 
-#Creacion y posicionamiento de etiquetas, entradas y botones
-Label_Usuario = Label(frame1, text="Usuario", font=("Aharoni", 8,))
-Label_Usuario.grid(row=2, column=1, sticky=SW, padx=10, pady=0)
-Entrada_Usuario = Entry(frame1)
-Entrada_Usuario.focus()
-Entrada_Usuario.grid(row=3, column=1, sticky=W, padx=10, pady=0)
+        self.frame1 = Frame(self.ventana,bg=colorfondo)
+        self.frame1.pack(fill='both', expand=True,)
+        self.frame2 = Frame(self.ventana,bg= colorfondo)
+        self.frame2.pack(fill='both', expand=True)
 
-#Agregacion y posicionamiento de icono usuario
-icoUser = Image.open("icoUser.ico")
-icoUser = icoUser.resize((20, 20))
-icoUser = ImageTk.PhotoImage(icoUser)
-Label_icoUser = Label(frame1, image=icoUser)
-Label_icoUser.grid(row=3, column=0, sticky=N, padx=1, pady=0)
-Label_contraseña = Label(frame1, text="Contraseña", font=("Aharoni", 8,))
-Label_contraseña.grid(row=4, column=1, sticky=W, padx=10, pady=0)
-icoPassword = Image.open("icoPassword.ico")
-icoPassword = icoPassword.resize((25, 25))
-icoPassword = ImageTk.PhotoImage(icoPassword)
-Label_icoPassword = Label(frame1, image=icoPassword)
-Label_icoPassword.grid(row=5, column=0, sticky=NW, padx=1, pady=0)
-Entrada_contraseña = Entry(frame1, show="*")
-Entrada_contraseña.grid(row=5, column=1, sticky=W, padx=10, pady=0)
-Boton_InicioSesion = Button(frame1, text="Iniciar Sesion", font=("Aharoni", 8,), bg="#2B00FF")
-Boton_InicioSesion.grid(row=6, column=1, padx=10, pady=5)
+        # TITULO  
+        
+        Titulo = Label(self.frame1, text="Inicio de Sesion", font=("Aharoni" , 31), bg = colorfondo)
+        Titulo.pack()
 
-ventana.mainloop()
+       # LOGO
+
+        self.Logo = Image.open("iconon.ico")
+        self.ImagenRedimensionada = self.Logo.resize((100, 100))
+        self.imagen_tk = ImageTk.PhotoImage(self.ImagenRedimensionada)
+        self.label_imagen = Label(self.frame1, image = self.imagen_tk)
+        self.label_imagen.pack(pady = 10)
+
+        #Creacion y posicionamiento de etiquetas, entradas y botones
+
+        self.Label_Usuario = Label(self.frame2, text="Usuario: ", font=("Aharoni", 12), bg = colorfondo)
+        self.Label_Usuario.grid(row = 1, column = 0, pady = 10, sticky = "nsew")
+        self.Entrada_Usuario = Entry(self.frame2, width = 21)
+        self.Entrada_Usuario.focus()
+        self.Entrada_Usuario.grid(row = 1, column = 1, padx = 10, pady = 10, sticky = "nesw")
+        
+        self.Label_contrasena = Label(self.frame2, text="Contraseña: ", font=("Aharoni", 12,), bg = colorfondo)
+        self.Label_contrasena.grid(row = 2, column = 0, sticky = "nesw", padx = 10, pady = 10)
+        self.Entrada_contrasena = Entry(self.frame2, show="*", width=21)
+        self.Entrada_contrasena.grid(row = 2, column = 1, sticky = 'nsew', padx = 10, pady = 10)
+
+        self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.login)
+        self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
+
+        mainloop()
+
+    # FUNCION QUE VERIFICA SI EL USUARIO Y CONTRASENA SON CORRECTAS PARA DAR PASO A LA SIGUIENTE PANTALLA
+
+    def login(self):
+      usuario = self.Entrada_Usuario.get()
+      contrasena = self.Entrada_contrasena.get()
+      if usuario == "edgar" and contrasena == "1234":
+                messagebox.showinfo("Informacion", "Contrasena correcta")
+                self.ventana.destroy()
+                Eleccion()
+      else: 
+                messagebox.showinfo("Informacion", "Usuario o contraseña incorrectos")
+               
+               #Clase donde esta la ventana de Eleccion
+
+class Eleccion:
+    def __init__(self):
+            self.ventana = Tk()
+            self.ventana.title("Eleccion")
+            self.ventana.iconbitmap("iconon.ico")
+            self.ventana.geometry ("700x500+300+100")
+
+            #Creacion de frames de esta ventana
+
+            self.frameIzquierdo = Frame(self.ventana)
+            self.frameIzquierdo.pack(side = LEFT, expand = True, fill = 'both')
+            self.frameDerecho = Frame(self.ventana)
+            self.frameDerecho.pack(side = RIGHT, expand = True, fill = 'both')
+            
+            # Botones
+
+            self.botonVenta = Button(self.frameIzquierdo, text = "Venta", font = ("Aharoni", 20), bg = colorfondo,width=5, height=13, cursor ="pirate", command = self.Venta)
+            self.botonVenta.pack(fill = "both")
+            self.botonRegistro = Button(self.frameDerecho, text = " Registrar ", font = ("Aharoni", 20), bg = "orange",width=5, height = 13, cursor = "hand2", command = self.Login_Registro)
+            self.botonRegistro.pack(fill = "both")
+            self.botonRegresar = Button(self.frameDerecho, text="Regresar", font= ("aharoni", 20), bg = "grey",command = self.Regresar)
+            self.botonRegresar.pack(fill = 'both')
+            mainloop()
+
+            # Funcion para regresar a la ventana de login
+
+    def Regresar(self):
+        self.ventana.destroy()
+        Login()
+        
+        #Funcion para mostrar un messagebox para confirmar si quiere ir a la ventan de Venta
+
+    def Venta(self):
+          s=1+1
+
+          #Funcion para mostrar un messagebox para confirmar si quiere ir a la ventana de registro
+
+    def Login_Registro(self):
+          Respuesta = messagebox.askyesno("Lechon", "Estas seguro que quieres ir a la ventana de Registro? ")
+          if Respuesta == True:
+            self.ventana.destroy()
+            Login_Registro()
+          else:
+                print("1")
+
+          ### Clase donde esta la ventana de inicio de sesion de la ventana de registro
+
+class Login_Registro:
+      def __init__(self):
+           
+            self.ventana = Tk()
+            self.ventana.title("Zapaisoft")
+            self.ventana.iconbitmap("iconon.ico")
+            self.ventana.resizable(0,0)
+            self.ventana.geometry("370x400+450+100")
+
+        #Creacion de frames
+            self.frame1 = Frame(self.ventana,bg=fondo)
+            self.frame1.pack(fill='both', expand=True,)
+            self.frame2 = Frame(self.ventana,bg= fondo)
+            self.frame2.pack(fill='both', expand=True)
+
+        # TITULO  
+        
+            Titulo = Label(self.frame1, text="Login Administrador", font=("Aharoni" , 31), bg = fondo, fg = "green")
+            Titulo.pack()
+
+       # LOGO
+
+            self.Logo = Image.open("iconon.ico")
+            self.ImagenRedimensionada = self.Logo.resize((100, 100))
+            self.imagen_tk = ImageTk.PhotoImage(self.ImagenRedimensionada)
+            self.label_imagen = Label(self.frame1, image = self.imagen_tk)
+            self.label_imagen.pack(pady = 10)
+
+        #Creacion y posicionamiento de etiquetas, entradas y botones
+
+            self.Label_Usuario = Label(self.frame2, text="Administrador: ", font=("Aharoni", 12), bg = fondo, fg = "green")
+            self.Label_Usuario.grid(row = 1, column = 0, pady = 10, sticky = "nsew")
+            self.Entrada_Usuario = Entry(self.frame2, width = 21, fg = "green")
+            self.Entrada_Usuario.focus()
+            self.Entrada_Usuario.grid(row = 1, column = 1, padx = 10, pady = 10, sticky = "nesw")
+        
+
+            self.Label_contrasena = Label(self.frame2, text="Contraseña: ", font=("Aharoni", 12,), bg = fondo, fg = "green")
+            self.Label_contrasena.grid(row = 2, column = 0, sticky = "nesw", padx = 10, pady = 10)
+            self.Entrada_contrasena = Entry(self.frame2, show="*", width=21, fg = "green")
+            self.Entrada_contrasena.grid(row = 2, column = 1, sticky = 'nsew', padx = 10, pady = 10)
+            self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,))
+            self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
+
+            mainloop()
+            
+      
+Login()
