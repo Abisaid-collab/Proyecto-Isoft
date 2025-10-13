@@ -58,7 +58,6 @@ class Login():
       usuario = self.Entrada_Usuario.get()
       contrasena = self.Entrada_contrasena.get()
       if usuario == "edgar" and contrasena == "1234":
-                messagebox.showinfo("Informacion", "Contrasena correcta")
                 self.ventana.destroy()
                 Eleccion()
       else: 
@@ -71,23 +70,22 @@ class Eleccion:
             self.ventana = Tk()
             self.ventana.title("Eleccion")
             self.ventana.iconbitmap("iconon.ico")
-            self.ventana.geometry ("700x500+300+100")
-
+            self.ventana.geometry("600x500+300+100")
             #Creacion de frames de esta ventana
 
-            self.frameIzquierdo = Frame(self.ventana)
-            self.frameIzquierdo.pack(side = LEFT, expand = True, fill = 'both')
-            self.frameDerecho = Frame(self.ventana)
-            self.frameDerecho.pack(side = RIGHT, expand = True, fill = 'both')
+            self.frameArriba = Frame(self.ventana)
+            self.frameArriba.pack( expand = True, fill = 'both')
+            self.frameAbajo = Frame(self.ventana)
+            self.frameAbajo.pack(expand = True, fill = 'both')    
             
             # Botones
 
-            self.botonVenta = Button(self.frameIzquierdo, text = "Venta", font = ("Aharoni", 20), bg = colorfondo,width=5, height=13, cursor ="pirate", command = self.Venta)
-            self.botonVenta.pack(fill = "both")
-            self.botonRegistro = Button(self.frameDerecho, text = " Registrar ", font = ("Aharoni", 20), bg = "orange",width=5, height = 13, cursor = "hand2", command = self.Login_Registro)
-            self.botonRegistro.pack(fill = "both")
-            self.botonRegresar = Button(self.frameDerecho, text="Regresar", font= ("aharoni", 20), bg = "grey",command = self.Regresar)
-            self.botonRegresar.pack(fill = 'both')
+            self.botonVenta = Button(self.frameArriba, text = "Venta", font = ("Aharoni", 20), bg = colorfondo,width=5, height=10, cursor ="pirate", command = self.Venta)
+            self.botonVenta.pack(side = LEFT, fill = "both", expand= 1)
+            self.botonRegistro = Button(self.frameArriba, text = " Registrar ", font = ("Aharoni", 20), bg = "orange",width=5, height = 10, cursor = "hand2", command = self.Login_Registro)
+            self.botonRegistro.pack(side = RIGHT, fill = "both", expand = 1)
+            self.botonRegresar = Button(self.frameAbajo, text="Regresar", font= ("aharoni", 20), bg = "grey",command = self.Regresar)
+            self.botonRegresar.pack(fill = 'both', expand = 1)
             mainloop()
 
             # Funcion para regresar a la ventana de login
@@ -120,7 +118,7 @@ class Login_Registro:
             self.ventana.title("Zapaisoft")
             self.ventana.iconbitmap("iconon.ico")
             self.ventana.resizable(0,0)
-            self.ventana.geometry("370x400+450+100")
+            self.ventana.geometry("370x440+450+100")
 
         #Creacion de frames
             self.frame1 = Frame(self.ventana,bg=fondo)
@@ -156,7 +154,12 @@ class Login_Registro:
             self.Entrada_contrasena.grid(row = 2, column = 1, sticky = 'nsew', padx = 10, pady = 10)
             self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,))
             self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
+            self.Boton_Regresar = Button(self.frame2, text = " Regresar ",font=("Aharoni", 12,), command = self.Regresar)
+            self.Boton_Regresar.grid(row = 4, column = 0)
 
+      def Regresar(self):
+            self.ventana.destroy()
+            Eleccion()
             mainloop()
             
       
