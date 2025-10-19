@@ -2,6 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
+from BD import *
 
 colorfondo = "#26C6DA"
 fondo = "#14213D"

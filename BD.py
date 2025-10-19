@@ -5,20 +5,37 @@ def crear_BD():
         conexion.commit()
         conexion.close()
 
-def crear_Tabla():
+
+def Conex():
         conexion = sql.connect("CalzaIsoft.db")
+        conexion.execute("PRAGMA foreign_keys = ON;")
+        return conexion
+
+
+def Iniciar_Cursor():
+        conexion = Conex()
         cursor = conexion.cursor()
-        cursor.execute(
-        """ CREATE TABLE Administradores  (
-                Usuario text PRIMARY KEY,
-                Contra text
-                    )""")
+        return conexion,cursor
+
+def crear_Tabla():
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Administradores (
+        Usuario TEXT PRIMARY KEY,
+        Contra TEXT,
+        Id_Empleado TEXT,
+        FOREIGN KEY (Id_Empleado)
+            REFERENCES Empleados(Id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+        )  
+        """)
         conexion.commit()
         conexion.close()
 
-def alterar():
-        conexion = sql.connect("CalzaIsoft.db")
-        cursor = conexion.cursor()
+def Eliminar_tabla(Tabla):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"DROP TABLE {Tabla}")
         conexion.commit()
         conexion.close()
 
@@ -70,6 +87,46 @@ def Eliminar_Stock(Tabla,eliminado,id):
         conexion.close()
 
 
+def Agregar_Administrador(usuario,contra,id):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"SELECT Id FROM Empleados WHERE Id = '{id}'")
+        fila = cursor.fetchone()
+        if fila is None:
+                print("El empleado no existe")
+        else:
+                cursor.execute(f"INSERT INTO Administradores VALUES ('{usuario}','{contra}','{id}')")
+                cursor.execute(f"UPDATE Empleados SET Rol = 'Administrador' WHERE id = '{id}'")
+        conexion.commit()
+        conexion.close()
 
+def Eliminar_Administrador(usuario,rol):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"SELECT Id_Empleado FROM Administradores WHERE Usuario = '{usuario}'")
+        fila = cursor.fetchone()
+        id = fila[0]
+        cursor.execute(f"UPDATE Empleados SET Rol = '{rol}' WHERE Id = '{id}'")
+        cursor.execute(f"DELETE FROM Administradores WHERE Usuario = '{usuario}' ")
+        conexion.commit()
+        conexion.close()
 
+def Actualizar_contra(Usuario,contra):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"""
+        UPDATE Administradores
+        SET Contra = '{contra}'
+        WHERE Usuario = '{Usuario}'""")
+        conexion.commit()
+        conexion.close()
+
+def Agregar_Empleado(id,nombre,ap_paterno,ap_materno,telefono,direccion,anti,rol):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"INSERT INTO Empleados VALUES('{id}','{nombre}','{ap_paterno}','{ap_materno}','{telefono}','{direccion}','{anti}','{rol}')")
+        conexion.commit()
+        conexion.close()
+
+def Eliminar_Empleado(id):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"DELETE FROM Empleados WHERE Id = '{id}'")
+        conexion.commit()
+        conexion.close()
 
