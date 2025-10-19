@@ -20,14 +20,16 @@ def Iniciar_Cursor():
 def crear_Tabla():
         conexion,cursor = Iniciar_Cursor()
         cursor.execute("""
-    CREATE TABLE IF NOT EXISTS Administradores (
-        Usuario TEXT PRIMARY KEY,
-        Contra TEXT,
-        Id_Empleado TEXT,
-        FOREIGN KEY (Id_Empleado)
-            REFERENCES Empleados(Id)
-            ON DELETE CASCADE
-            ON UPDATE CASCADE
+    CREATE TABLE IF NOT EXISTS Empleados (
+        ID TEXT PRIMARY KEY,
+        Nombre TEXT,
+        ap_Paterno TEXT,
+        ap_Materno TEXT,
+        Telefono Text,
+        Direccion TEXT,
+        Antigüedad TEXT,
+        Rol TEXT,
+        Contra text
         )  
         """)
         conexion.commit()
@@ -118,9 +120,9 @@ def Actualizar_contra(Usuario,contra):
         conexion.commit()
         conexion.close()
 
-def Agregar_Empleado(id,nombre,ap_paterno,ap_materno,telefono,direccion,anti,rol):
+def Agregar_Empleado(id,nombre,ap_paterno,ap_materno,telefono,direccion,anti,rol,contra):
         conexion,cursor = Iniciar_Cursor()
-        cursor.execute(f"INSERT INTO Empleados VALUES('{id}','{nombre}','{ap_paterno}','{ap_materno}','{telefono}','{direccion}','{anti}','{rol}')")
+        cursor.execute(f"INSERT INTO Empleados VALUES('{id}','{nombre}','{ap_paterno}','{ap_materno}','{telefono}','{direccion}','{anti}','{rol}','{contra}')")
         conexion.commit()
         conexion.close()
 
@@ -130,3 +132,20 @@ def Eliminar_Empleado(id):
         conexion.commit()
         conexion.close()
 
+def comparar_contra(usuario,contra):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"SELECT contra from Empleados WHERE Nombre = '{usuario}'")
+        fila = cursor.fetchone()
+        conexion.close()
+        if fila is None:
+                return False
+        return contra == fila[0]
+
+def comparar_Admin(usuario,contra):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"SELECT contra from Administradores WHERE Usuario = '{usuario}'")
+        fila = cursor.fetchone()
+        conexion.close()
+        if fila is None:
+                return False
+        return contra == fila[0]
