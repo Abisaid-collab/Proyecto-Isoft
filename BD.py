@@ -128,8 +128,14 @@ def Agregar_Empleado(id,nombre,ap_paterno,ap_materno,telefono,direccion,anti,rol
 
 def Eliminar_Empleado(id):
         conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"SELECT Rol FROM Empleados WHERE Id = '{id}'")
+        fila = cursor.fetchone()
+        rol = fila[0]
         cursor.execute(f"DELETE FROM Empleados WHERE Id = '{id}'")
         conexion.commit()
+        if rol == "Administrador":
+                cursor.execute(f"DELETE FROM Administradores WHERE Id_Empleado = '{id}'")
+                conexion.commit()
         conexion.close()
 
 def comparar_contra(usuario,contra):

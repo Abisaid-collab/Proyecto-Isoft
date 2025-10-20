@@ -165,16 +165,15 @@ class Login_Registro:
             self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.login)
             self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
     
-
-def login(self):
-                usuario = self.Entrada_Usuario.get()
-                contrasena = self.Entrada_contrasena.get()
-                comparacion = comparar_Admin(usuario,contrasena)
-                if comparacion:
-                    messagebox.showinfo("Informacion", "Contrasena correcta")
-                    self.ventana.destroy()
-                else: 
-                    messagebox.showinfo("Informacion", "Usuario o contraseña incorrectos")
+      def login(self):
+            usuario = self.Entrada_Usuario.get()
+            contrasena = self.Entrada_contrasena.get()
+            comparacion = comparar_Admin(usuario,contrasena)
+            if comparacion:
+                messagebox.showinfo("Informacion", "Contrasena correcta")
+                self.ventana.destroy()
+            else: 
+                messagebox.showinfo("Informacion", "Usuario o contraseña incorrectos")
                
 
 
