@@ -5,7 +5,6 @@ def crear_BD():
         conexion.commit()
         conexion.close()
 
-
 def Conex():
         conexion = sql.connect("CalzaIsoft.db")
         conexion.execute("PRAGMA foreign_keys = ON;")
@@ -20,16 +19,15 @@ def Iniciar_Cursor():
 def crear_Tabla():
         conexion,cursor = Iniciar_Cursor()
         cursor.execute("""
-    CREATE TABLE IF NOT EXISTS Empleados (
-        ID TEXT PRIMARY KEY,
-        Nombre TEXT,
-        ap_Paterno TEXT,
-        ap_Materno TEXT,
-        Telefono Text,
-        Direccion TEXT,
-        Antigüedad TEXT,
-        Rol TEXT,
-        Contra text
+    CREATE TABLE IF NOT EXISTS VANS (
+        Id_Producto TEXT PRIMARY KEY,
+        Sexo TEXT,
+        Talla INTEGER,
+        Color TEXT,
+        Material Text,
+        Tipo TEXT,
+        Precio FLOAT,
+        Stock INTEGER
         )  
         """)
         conexion.commit()
@@ -42,11 +40,21 @@ def Eliminar_tabla(Tabla):
         conexion.close()
 
 def agregar_nuevo_zapato(tabla,id,sexo,talla,color,material,tipo,precio,stock):
-        conexion = sql.connect("CalzaIsoft.db")
-        cursor = conexion.cursor()
-        cursor.execute(f"INSERT INTO {tabla} VALUES ('{id}','{sexo}',{talla},'{color}','{material}','{tipo}',{precio},{stock})")
-        conexion.commit()
-        conexion.close()
+        conexion,cursor = Iniciar_Cursor()
+        try:
+                cursor.execute(f"INSERT INTO {tabla} VALUES ('{id}','{sexo}',{talla},'{color}','{material}','{tipo}',{precio},{stock})")
+                mensaje = ("Producto Agregado correctamente")
+                conexion.commit()
+        except sql.IntegrityError:
+                mensaje = ("Error: el ID del producto ya existe o hay conflicto de integridad.")
+        except sql.OperationalError as e:
+                mensaje = (f"Error de operacion {e}")
+        except Exception as e:
+                mensaje = (f"Ocurrio un error inesperado {e}")
+        finally:
+                conexion.close()
+
+        return mensaje
 
 def mostrar_datos(Tabla):
         conexion = sql.connect("CalzaIsoft.db")
@@ -60,11 +68,46 @@ def mostrar_datos(Tabla):
         conexion.close()
 
 def Eliminar_Zapato(Tabla,Id):
-        conexion = sql.connect("CalzaIsoft.db")
-        cursor = conexion.cursor()
-        cursor.execute(f"DELETE FROM {Tabla} WHERE Id_Producto = '{Id}'")
-        conexion.commit()
-        conexion.close()
+        conexion,cursor = Iniciar_Cursor()
+        try:
+                cursor.execute(f"DELETE FROM {Tabla} WHERE Id_Producto = '{Id}'")
+                conexion.commit()
+                if cursor.rowcount == 0:
+                        mensaje = ("No se encontro el producto")
+                else:
+                        mensaje = ("Producto eliminado")
+        except sql.OperationalError as e:
+                mensaje = (f"Ocurrio un error operacional {e}")
+        except sql.IntegrityError as e:
+                mensaje = (f"Ocurrio un error de Integridad {e}")
+        except Exception as e:
+                mensaje = (f"Ocurrio un error {e}")
+        finally:
+                conexion.close()
+        return mensaje
+
+def Modificar_Precio(tabla,id,precio):
+        conexion,cursor = Iniciar_Cursor()
+        try:
+                cursor.execute(f"""
+                UPDATE {tabla}
+                SET Precio = {precio}
+                WHERE Id_Producto = '{id}'""")
+                conexion.commit()
+                if cursor.rowcount == 0:
+                        msg = ("No se encontro el producto para actualizar")
+                else:
+                        msg = ("Precio Actualizado correctamente")
+                        
+        except Exception as e:
+                msg = (f"Ocurrio un error {e}")
+        except sql.OperationalError as e:
+                msg = (f"Ocurrio un error operacional {e}")
+        except sql.IntegrityError as e:
+                msg = (f"Ocurrio un error de integridad {e}")
+        finally:
+                conexion.close()
+        return msg
 
 def Agregar_Stock(Tabla,agregado,id):
         conexion = sql.connect("CalzaIsoft.db")

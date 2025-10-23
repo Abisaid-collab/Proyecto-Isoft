@@ -227,7 +227,7 @@ class Registro:
             self.Label_Precio = Label(self.frame2, text = "Precio: " ,font = ("Aharoni", 18), bg = fondo, fg = "white")
             self.Label_Stock = Label(self.frame2, text = "Stock: " ,font = ("Aharoni", 18), bg = fondo, fg = "white")
 
-            self.ListaMarca = ["Nike", "Adidas", "Converse", "Pumas", "Skechers","VANS"]
+            self.ListaMarca = ["Nike", "Adidas", "Converse", "Puma", "Skechers","VANS"]
             self.ListaSexo = ["Masculino", "Femenino"]
             self.ListaMaterial = ["Sintetico", "Cuero", "Plastico"]
             self.ListaTipo = ["Tenis", "Zapato", "Sandalia", "Bota", "Zapatilla"]
@@ -253,9 +253,10 @@ class Registro:
             self.Entrada_Precio = Entry(self.frame2, cursor = "ibeam" )
             self.Entrada_Stock = Entry(self.frame2, cursor = "ibeam")
 
-            self.Botonregistro = Button(self.frame2, text = "Registrar", font = ("Aharoni", 16), command= lambda: self.Agregar(self.MarcaV.get(),self.Entrada_IDproducto.get(),self.SexoV.get(),self.TallaV.get(),self.Entrada_Color.get(),self.MaterialV.get(),self.TipoV.get(),self.Entrada_Precio.get(),self.Entrada_Stock.get()))
-            self.BotonActualizar =Button(self.frame2, text = "Actualizar", font = ("Aharoni", 16) )
-            self.BotonEliminar =Button(self.frame2, text = "Eliminar", font = ("Aharoni", 16) )
+            self.Botonregistro = Button(self.frame2, text = "Registrar", font = ("Aharoni", 16), command = lambda: self.Agregar(self.MarcaV.get(),self.Entrada_IDproducto.get(),self.SexoV.get(),self.TallaV.get(),self.Entrada_Color.get(),self.MaterialV.get(),self.TipoV.get(),self.Entrada_Precio.get(),self.Entrada_Stock.get()))
+            self.BotonActualizar =Button(self.frame2, text = "Actualizar", font = ("Aharoni", 16), command = lambda: self.Modificar(self.MarcaV.get(),self.Entrada_IDproducto.get(),self.Entrada_Precio.get()))
+            self.BotonEliminar =Button(self.frame2, text = "Eliminar", font = ("Aharoni", 16), command = lambda: self.Eliminar(self.MarcaV.get(),self.Entrada_IDproducto.get()) )
+
             #Posicionamiento
 
             self.Label_IDProducto.grid(row = 1, column = 1, pady = 8,padx = 10, sticky = E)
@@ -281,13 +282,18 @@ class Registro:
             self.Botonregistro.grid(row  = 10, column = 1, columnspan = 1, sticky = NSEW, pady=8, padx = 2)
             self.BotonActualizar.grid(row  = 10, column = 2, columnspan = 1, sticky = NSEW, pady=8, padx = 2)
             self.BotonEliminar.grid(row  = 10, column = 3, columnspan = 1, sticky = NSEW, pady=8, padx = 2)
-      def Agregar(self,tabla,id,sexo,talla,color,material,tipo,precio,stock):
-            agregar_nuevo_zapato(tabla,id,sexo,talla,color,material,tipo,precio,stock)
 
-           
-           
+      def Agregar(self,tabla,id,sexo,talla,color,material,tipo,precio,stock):
+            msg = agregar_nuevo_zapato(tabla,id,sexo,talla,color,material,tipo,precio,stock)
+            messagebox.showinfo("Informacion",msg)
+            
+
+      def Eliminar(self,tabla,id):
+            msg = Eliminar_Zapato(tabla,id)
+            messagebox.showinfo("Informacion",msg)
             mainloop ()
 
-
-
+      def Modificar(self,tabla,id,precio):
+            msg = Modificar_Precio(tabla,id,precio)
+            messagebox.showinfo("Informacion",msg)
 Login()
