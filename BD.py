@@ -109,6 +109,13 @@ def Modificar_Precio(tabla,id,precio):
                 conexion.close()
         return msg
 
+def buscar_precio(tabla,id):
+        conexion,cursor = Iniciar_Cursor()
+        cursor.execute(f"SELECT precio FROM '{tabla}' WHERE Id_Producto = '{id}'")
+        fila = cursor.fetchone()
+        conexion.close()
+        return fila[0] if fila else ""
+
 def Agregar_Stock(Tabla,agregado,id):
         conexion = sql.connect("CalzaIsoft.db")
         cursor = conexion.cursor()
