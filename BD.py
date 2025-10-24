@@ -116,6 +116,7 @@ def buscar_precio(tabla,id):
         conexion.close()
         return fila[0] if fila else ""
 
+
 def Agregar_Stock(Tabla,agregado,id):
         conexion = sql.connect("CalzaIsoft.db")
         cursor = conexion.cursor()
