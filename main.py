@@ -1,3 +1,4 @@
+#Archivo Main
 #Importacion de librerias
 from tkinter import *
 import tkinter as tk
@@ -5,7 +6,14 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 from tkinter import ttk as kt
 from BD import *
+import sys, os
 
+
+
+def ruta_recurso(relative_path):
+    """Devuelve la ruta correcta para archivos dentro o fuera del exe."""
+    base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
 
 color = "#EB6C10"
 fondo = "#292929"
@@ -14,7 +22,8 @@ class Login():
     def __init__(self):
         self.ventana = tk.Tk()
         self.ventana.title("Zapaisoft")
-        self.ventana.iconbitmap("iconon.ico")
+        icon_path = ruta_recurso("iconon.ico")
+        self.ventana.iconbitmap(ruta_recurso("iconon.ico"))
         self.ventana.resizable(0,0)
         self.ventana.geometry("350x400+450+100")
 
@@ -32,7 +41,7 @@ class Login():
 
        # LOGO
 
-        self.Logo = Image.open("iconon.ico")
+        self.Logo = Image.open(ruta_recurso("iconon.ico"))
         self.ImagenRedimensionada = self.Logo.resize((100, 100))
         self.imagen_tk = ImageTk.PhotoImage(self.ImagenRedimensionada)
         self.label_imagen = Label(self.frame1, image = self.imagen_tk)
@@ -76,15 +85,15 @@ class Eleccion:
 
             self.ventana = Tk()
             self.ventana.title("Eleccion")
-            self.ventana.iconbitmap("iconon.ico")
+            self.ventana.iconbitmap(ruta_recurso("iconon.ico"))
             self.ventana.geometry("700x500+300+100")
             self.ventana.resizable(False, False)
 
-            self.ImagenV = Image.open("Venta.ico")
+            self.ImagenV = Image.open(ruta_recurso("Venta.ico"))
             self.ImagenRedimensionada = self.ImagenV.resize((100, 100))
             self.Imagen_Venta = ImageTk.PhotoImage(self.ImagenRedimensionada)
 
-            self.ImagenR = Image.open("Registritio.ico")
+            self.ImagenR = Image.open(ruta_recurso("Registritio.ico"))
             self.ImagenRedimensionad = self.ImagenR.resize((100, 100))
             self.Imagen_Registro = ImageTk.PhotoImage(self.ImagenRedimensionad)
            
@@ -139,7 +148,7 @@ class Login_Registro:
            
             self.ventana = Tk()
             self.ventana.title("Zapaisoft")
-            self.ventana.iconbitmap("iconon.ico")
+            self.ventana.iconbitmap(ruta_recurso("iconon.ico"))
             self.ventana.resizable(1,1)
             self.ventana.geometry("370x470+450+100")
 
@@ -156,7 +165,7 @@ class Login_Registro:
 
        # LOGO
 
-            self.Logo = Image.open("iconon.ico")
+            self.Logo = Image.open(ruta_recurso("iconon.ico"))
             self.ImagenRedimensionada = self.Logo.resize((100, 100))
             self.imagen_tk = ImageTk.PhotoImage(self.ImagenRedimensionada)
             self.label_imagen = Label(self.frame1, image = self.imagen_tk)
@@ -209,7 +218,7 @@ class Registro:
 
             self.ventana = Tk()
             self.ventana.title("Registro")
-            self.ventana.iconbitmap("iconon.ico")
+            self.ventana.iconbitmap(ruta_recurso("iconon.ico"))
             self.ventana.config(bg = fondo)
 
 #  Creacion de frames
@@ -221,7 +230,7 @@ class Registro:
 
 #LOGO
 
-            self.Logo = Image.open("iconon.ico")
+            self.Logo = Image.open(ruta_recurso("iconon.ico"))
             self.ImagenRedimensionada = self.Logo.resize((100, 100))
             self.imagen_tk = ImageTk.PhotoImage(self.ImagenRedimensionada)
             self.label_imagen = Label(self.frame1, image = self.imagen_tk)

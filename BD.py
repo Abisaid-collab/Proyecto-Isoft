@@ -1,23 +1,26 @@
+import os
+import sys
 import sqlite3 as sql
 
-def crear_BD():
-        conexion = sql.connect("CalzaIsoft.db")
-        conexion.commit()
-        conexion.close()
+def ruta_db(nombre_db="CalzaIsoft.db"):
+    import sys, os
+    if getattr(sys, 'frozen', False):
+        base_path = os.path.dirname(sys.executable)
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, nombre_db)
 
 def Conex():
-        conexion = sql.connect("CalzaIsoft.db")
-        conexion.execute("PRAGMA foreign_keys = ON;")
-        return conexion
+    ruta = ruta_db()
+    conexion = sql.connect(ruta)
+    conexion.execute("PRAGMA foreign_keys = ON;")
+    cursor = conexion.cursor()
+    return conexion,cursor
 
 
-def Iniciar_Cursor():
-        conexion = Conex()
-        cursor = conexion.cursor()
-        return conexion,cursor
 
 def crear_Tabla():
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute("""
     CREATE TABLE IF NOT EXISTS VANS (
         Id_Producto TEXT PRIMARY KEY,
@@ -34,13 +37,13 @@ def crear_Tabla():
         conexion.close()
 
 def Eliminar_tabla(Tabla):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"DROP TABLE {Tabla}")
         conexion.commit()
         conexion.close()
 
 def agregar_nuevo_zapato(tabla,id,sexo,talla,color,material,tipo,precio,stock):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         try:
                 cursor.execute(f"INSERT INTO {tabla} VALUES ('{id}','{sexo}',{talla},'{color}','{material}','{tipo}',{precio},{stock})")
                 mensaje = ("Producto Agregado correctamente")
@@ -57,8 +60,7 @@ def agregar_nuevo_zapato(tabla,id,sexo,talla,color,material,tipo,precio,stock):
         return mensaje
 
 def mostrar_datos(Tabla):
-        conexion = sql.connect("CalzaIsoft.db")
-        cursor = conexion.cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"Select * from {Tabla}")
         filas = cursor.fetchall()
 
@@ -68,7 +70,7 @@ def mostrar_datos(Tabla):
         conexion.close()
 
 def Eliminar_Zapato(Tabla,Id):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         try:
                 cursor.execute(f"DELETE FROM {Tabla} WHERE Id_Producto = '{Id}'")
                 conexion.commit()
@@ -87,7 +89,7 @@ def Eliminar_Zapato(Tabla,Id):
         return mensaje
 
 def Modificar_Precio(tabla,id,precio):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         try:
                 cursor.execute(f"""
                 UPDATE {tabla}
@@ -110,7 +112,7 @@ def Modificar_Precio(tabla,id,precio):
         return msg
 
 def buscar_precio(tabla,id):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"SELECT precio FROM '{tabla}' WHERE Id_Producto = '{id}'")
         fila = cursor.fetchone()
         conexion.close()
@@ -118,8 +120,7 @@ def buscar_precio(tabla,id):
 
 
 def Agregar_Stock(Tabla,agregado,id):
-        conexion = sql.connect("CalzaIsoft.db")
-        cursor = conexion.cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"""
         UPDATE {Tabla}
         SET Stock = Stock + {agregado}
@@ -129,8 +130,7 @@ def Agregar_Stock(Tabla,agregado,id):
         conexion.close()
 
 def Eliminar_Stock(Tabla,eliminado,id):
-        conexion = sql.connect("CalzaIsoft.db")
-        cursor = conexion.cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"""
         UPDATE {Tabla}
         SET Stock = Stock - {eliminado}
@@ -141,7 +141,7 @@ def Eliminar_Stock(Tabla,eliminado,id):
 
 
 def Agregar_Administrador(usuario,contra,id):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"SELECT Id FROM Empleados WHERE Id = '{id}'")
         fila = cursor.fetchone()
         if fila is None:
@@ -153,7 +153,7 @@ def Agregar_Administrador(usuario,contra,id):
         conexion.close()
 
 def Eliminar_Administrador(usuario,rol):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"SELECT Id_Empleado FROM Administradores WHERE Usuario = '{usuario}'")
         fila = cursor.fetchone()
         id = fila[0]
@@ -163,7 +163,7 @@ def Eliminar_Administrador(usuario,rol):
         conexion.close()
 
 def Actualizar_contra(Usuario,contra):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"""
         UPDATE Administradores
         SET Contra = '{contra}'
@@ -172,13 +172,13 @@ def Actualizar_contra(Usuario,contra):
         conexion.close()
 
 def Agregar_Empleado(id,nombre,ap_paterno,ap_materno,telefono,direccion,anti,rol,contra):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"INSERT INTO Empleados VALUES('{id}','{nombre}','{ap_paterno}','{ap_materno}','{telefono}','{direccion}','{anti}','{rol}','{contra}')")
         conexion.commit()
         conexion.close()
 
 def Eliminar_Empleado(id):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"SELECT Rol FROM Empleados WHERE Id = '{id}'")
         fila = cursor.fetchone()
         rol = fila[0]
@@ -190,7 +190,7 @@ def Eliminar_Empleado(id):
         conexion.close()
 
 def comparar_contra(usuario,contra):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"SELECT contra from Empleados WHERE Nombre = '{usuario}'")
         fila = cursor.fetchone()
         conexion.close()
@@ -199,7 +199,7 @@ def comparar_contra(usuario,contra):
         return contra == fila[0]
 
 def comparar_Admin(usuario,contra):
-        conexion,cursor = Iniciar_Cursor()
+        conexion,cursor = Conex()
         cursor.execute(f"SELECT contra from Administradores WHERE Usuario = '{usuario}'")
         fila = cursor.fetchone()
         conexion.close()
