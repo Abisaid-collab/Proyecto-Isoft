@@ -2,12 +2,17 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
+<<<<<<< HEAD
 
 from tkinter import ttk
 
 from BD import *
 
 
+=======
+from tkinter import ttk
+from BD import *
+>>>>>>> dff8423085d4dc113ce26d295d9d90d4bdc72a89
 colorfondo = "#26C6DA"
 fondo = "#14213D"
 #Creacion de ventana
@@ -62,12 +67,18 @@ class Login():
     def login(self):
       usuario = self.Entrada_Usuario.get()
       contrasena = self.Entrada_contrasena.get()
+<<<<<<< HEAD
       if usuario == "edgar" and contrasena == "1234":
 
          comparacion = comparar_contra(usuario,contrasena)
       if comparacion:
                 messagebox.showinfo("Informacion", "Contrasena correcta")
 
+=======
+      comparacion = comparar_contra(usuario,contrasena)
+      if comparacion:
+                messagebox.showinfo("Informacion", "Contrasena correcta")
+>>>>>>> dff8423085d4dc113ce26d295d9d90d4bdc72a89
                 self.ventana.destroy()
                 Eleccion()
       else: 
@@ -171,6 +182,7 @@ class Login_Registro:
             self.Label_contrasena.grid(row = 2, column = 0, sticky = "nesw", padx = 10, pady = 10)
             self.Entrada_contrasena = Entry(self.frame2, show="*", width=21, fg = "green")
             self.Entrada_contrasena.grid(row = 2, column = 1, sticky = 'nsew', padx = 10, pady = 10)
+<<<<<<< HEAD
 
             self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.logear)
             self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
@@ -181,6 +193,14 @@ class Login_Registro:
             self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.login)
             self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
     
+=======
+            self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.login)
+            self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
+            self.Boton_Regresar = Button(self.frame2, text = " Regresar ",font=("Aharoni", 12,), command = self.Regresar)
+            self.Boton_Regresar.grid(row = 3, column = 0)
+            
+
+>>>>>>> dff8423085d4dc113ce26d295d9d90d4bdc72a89
       def login(self):
             usuario = self.Entrada_Usuario.get()
             contrasena = self.Entrada_contrasena.get()
@@ -188,14 +208,18 @@ class Login_Registro:
             if comparacion:
                 messagebox.showinfo("Informacion", "Contrasena correcta")
                 self.ventana.destroy()
+                Registro()
             else: 
                 messagebox.showinfo("Informacion", "Usuario o contraseña incorrectos")
+<<<<<<< HEAD
                
 
 
 Login()
 
             
+=======
+>>>>>>> dff8423085d4dc113ce26d295d9d90d4bdc72a89
             #Funcion de regresar
 
            def Regresar(self):
@@ -203,19 +227,6 @@ Login()
             Eleccion()
         
         #Funcion de Registrar admin
-
-      def logear(self):
-            usuario = self.Entrada_Usuario.get()
-            contrasena = self.Entrada_contrasena.get()
-            if usuario == "edgar" and contrasena == "1234":
-                self.ventana.destroy()
-                Registro()
-            else: 
-                messagebox.showinfo("Informacion", "Usuario o contraseña incorrectos")
-
-      
-
-
 
 #Clase de registro
 
@@ -256,7 +267,7 @@ class Registro:
             self.Label_Precio = Label(self.frame2, text = "Precio: " ,font = ("Aharoni", 18), bg = fondo, fg = "white")
             self.Label_Stock = Label(self.frame2, text = "Stock: " ,font = ("Aharoni", 18), bg = fondo, fg = "white")
 
-            self.ListaMarca = ["Nike", "Adidas", "Converse", "Pumas", "Skechers","VANS"]
+            self.ListaMarca = ["Nike", "Adidas", "Converse", "Puma", "Skechers","VANS"]
             self.ListaSexo = ["Masculino", "Femenino"]
             self.ListaMaterial = ["Sintetico", "Cuero", "Plastico"]
             self.ListaTipo = ["Tenis", "Zapato", "Sandalia", "Bota", "Zapatilla"]
@@ -281,9 +292,11 @@ class Registro:
             self.TipoV.set("Eliga el Tipo")
             self.Entrada_Precio = Entry(self.frame2, cursor = "ibeam" )
             self.Entrada_Stock = Entry(self.frame2, cursor = "ibeam")
-            self.Botonregistro = Button(self.frame2, text = "Registrar", font = ("Aharoni", 16))
-            self.BotonActualizar =Button(self.frame2, text = "Actualizar", font = ("Aharoni", 16) )
-            self.BotonEliminar =Button(self.frame2, text = "Eliminar", font = ("Aharoni", 16) )
+
+            self.Botonregistro = Button(self.frame2, text = "Registrar", font = ("Aharoni", 16), command = lambda: self.Agregar(self.MarcaV.get(),self.Entrada_IDproducto.get(),self.SexoV.get(),self.TallaV.get(),self.Entrada_Color.get(),self.MaterialV.get(),self.TipoV.get(),self.Entrada_Precio.get(),self.Entrada_Stock.get()))
+            self.BotonActualizar =Button(self.frame2, text = "Actualizar", font = ("Aharoni", 16), command = lambda: self.Modificar(self.MarcaV.get(),self.Entrada_IDproducto.get(),self.Entrada_Precio.get()))
+            self.BotonEliminar =Button(self.frame2, text = "Eliminar", font = ("Aharoni", 16), command = lambda: self.Eliminar(self.MarcaV.get(),self.Entrada_IDproducto.get()) )
+
             #Posicionamiento
 
             self.Label_IDProducto.grid(row = 1, column = 1, pady = 8,padx = 10, sticky = E)
@@ -309,9 +322,18 @@ class Registro:
             self.Botonregistro.grid(row  = 10, column = 1, columnspan = 1, sticky = NSEW, pady=8, padx = 2)
             self.BotonActualizar.grid(row  = 10, column = 2, columnspan = 1, sticky = NSEW, pady=8, padx = 2)
             self.BotonEliminar.grid(row  = 10, column = 3, columnspan = 1, sticky = NSEW, pady=8, padx = 2)
+
+      def Agregar(self,tabla,id,sexo,talla,color,material,tipo,precio,stock):
+            msg = agregar_nuevo_zapato(tabla,id,sexo,talla,color,material,tipo,precio,stock)
+            messagebox.showinfo("Informacion",msg)
+            
+
+      def Eliminar(self,tabla,id):
+            msg = Eliminar_Zapato(tabla,id)
+            messagebox.showinfo("Informacion",msg)
             mainloop ()
 
-
-
-      
+      def Modificar(self,tabla,id,precio):
+            msg = Modificar_Precio(tabla,id,precio)
+            messagebox.showinfo("Informacion",msg)
 Login()
