@@ -2,12 +2,12 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
-<<<<<<< HEAD
+
 from tkinter import ttk
-=======
+
 from BD import *
 
->>>>>>> 64e2b21344c25c024dbaf73867c4099a858e4ac2
+
 colorfondo = "#26C6DA"
 fondo = "#14213D"
 #Creacion de ventana
@@ -62,13 +62,12 @@ class Login():
     def login(self):
       usuario = self.Entrada_Usuario.get()
       contrasena = self.Entrada_contrasena.get()
-<<<<<<< HEAD
       if usuario == "edgar" and contrasena == "1234":
-=======
-      comparacion = comparar_contra(usuario,contrasena)
+
+         comparacion = comparar_contra(usuario,contrasena)
       if comparacion:
                 messagebox.showinfo("Informacion", "Contrasena correcta")
->>>>>>> 64e2b21344c25c024dbaf73867c4099a858e4ac2
+
                 self.ventana.destroy()
                 Eleccion()
       else: 
@@ -172,13 +171,13 @@ class Login_Registro:
             self.Label_contrasena.grid(row = 2, column = 0, sticky = "nesw", padx = 10, pady = 10)
             self.Entrada_contrasena = Entry(self.frame2, show="*", width=21, fg = "green")
             self.Entrada_contrasena.grid(row = 2, column = 1, sticky = 'nsew', padx = 10, pady = 10)
-<<<<<<< HEAD
+
             self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.logear)
             self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
             self.Boton_Regresar = Button(self.frame2, text = " Regresar ",font=("Aharoni", 12,), command = self.Regresar)
             self.Boton_Regresar.grid(row = 3, column = 0)
             mainloop
-=======
+
             self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", font=("Aharoni", 15,), command = self.login)
             self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 10, pady = 15, columnspan = 2, sticky = W)
     
@@ -194,13 +193,12 @@ class Login_Registro:
                
 
 
-if __name__ == "__main__":
-    Login()
->>>>>>> 64e2b21344c25c024dbaf73867c4099a858e4ac2
+Login()
+
             
             #Funcion de regresar
 
-      def Regresar(self):
+           def Regresar(self):
             self.ventana.destroy()
             Eleccion()
         
