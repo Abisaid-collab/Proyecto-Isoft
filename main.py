@@ -7,7 +7,10 @@ from PIL import Image, ImageTk
 from tkinter import ttk as kt
 from BD import *
 import sys, os
+import webbrowser
 
+def abrir_link():
+    webbrowser.open("https://udomx-my.sharepoint.com/:f:/g/personal/24040123_uadeo_mx/EqyFl4oo3ZFNslJHSaeoW6MBCfOa06jfbMJIqhw1cHCEoQ?e=aPFPGO")
 
 
 def ruta_recurso(relative_path):
@@ -59,10 +62,11 @@ class Login():
         self.Label_contrasena.grid(row = 2, column = 0, sticky = "w", padx = 5, pady = 10)
         self.Entrada_contrasena = Entry(self.frame2, show="*", width=21)
         self.Entrada_contrasena.grid(row = 2, column = 1, sticky = "w", padx = 5, pady = 10)
-
         self.Boton_InicioSesion = Button(self.frame2, text="Iniciar Sesion", command = self.login, font = ("New Times Roman", 15))
         self.Boton_InicioSesion.grid(row = 3, column = 1, padx = 1, pady = 15, columnspan = 2, sticky = "w")
         self.ventana.bind('<Return>', lambda event= None: self.Boton_InicioSesion.invoke())
+        self.Boton_DriveDocumentos = Button(self.frame2, text="Abrir link (Google)", command=abrir_link, font = ("New Times Roman", 12))
+        self.Boton_DriveDocumentos.grid(row = 4, column = 1, padx = 5, pady = 5, sticky = "w")
         mainloop()
 
     # FUNCION QUE VERIFICA SI EL USUARIO Y CONTRASEÑA SON CORRECTAS PARA DAR PASO A LA SIGUIENTE PANTALLA
